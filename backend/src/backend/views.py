@@ -23,7 +23,14 @@ class LineChartDataView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        data = {"labels": ["Jan", "Feb", "Mar", "Apr"], "data": [10, 20, 30, 40]}
+        data = {
+            "data": [
+                {"x": 10, "label": "Jan"},
+                {"x": 20, "label": "Feb"},
+                {"x": 30, "label": "Mar"},
+                {"x": 40, "label": "Apr"},
+            ]
+        }
         return Response(data, status=status.HTTP_200_OK)
 
 
@@ -32,8 +39,11 @@ class BarChartDataView(APIView):
 
     def get(self, request):
         data = {
-            "labels": ["Product A", "Product B", "Product C"],
-            "data": [100, 150, 200],
+            "data": [
+                {"x": 100, "label": "Product A"},
+                {"x": 150, "label": "Product B"},
+                {"x": 200, "label": "Product C"},
+            ]
         }
         return Response(data, status=status.HTTP_200_OK)
 
@@ -42,5 +52,11 @@ class PieChartDataView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        data = {"labels": ["Red", "Blue", "Yellow"], "data": [300, 50, 100]}
+        data = {
+            "data": [
+                {"x": 300, "label": "Red"},
+                {"x": 50, "label": "Blue"},
+                {"x": 100, "label": "Yellow"},
+            ]
+        }
         return Response(data, status=status.HTTP_200_OK)

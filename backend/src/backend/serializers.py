@@ -132,15 +132,15 @@ class CandlestickSerializer(serializers.Serializer):
 
 
 class LineChartSerializer(serializers.Serializer):
-    labels = serializers.ListField(child=serializers.CharField())
-    data = serializers.ListField(child=serializers.IntegerField())
+    label = serializers.ListField(child=serializers.CharField())
+    x = serializers.ListField(child=serializers.IntegerField())
 
 
 class BarChartSerializer(serializers.Serializer):
-    labels = serializers.ListField(child=serializers.CharField())
-    data = serializers.ListField(child=serializers.IntegerField())
+    label = serializers.ListField(child=serializers.CharField())
+    x = serializers.ListField(child=serializers.IntegerField())
 
 
 class PieChartSerializer(serializers.Serializer):
-    labels = serializers.ListField(child=serializers.CharField())
-    data = serializers.ListField(child=serializers.IntegerField())
+    label = serializers.ListField(child=serializers.CharField())
+    x = serializers.ListField(child=serializers.IntegerField())
