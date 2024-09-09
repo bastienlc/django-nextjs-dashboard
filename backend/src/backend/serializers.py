@@ -121,3 +121,26 @@ class UserCreateErrorSerializer(serializers.Serializer):
     password_retype = serializers.ListSerializer(
         child=serializers.CharField(), required=False
     )
+
+
+class CandlestickSerializer(serializers.Serializer):
+    x = serializers.CharField()
+    open = serializers.FloatField()
+    high = serializers.FloatField()
+    low = serializers.FloatField()
+    close = serializers.FloatField()
+
+
+class LineChartSerializer(serializers.Serializer):
+    labels = serializers.ListField(child=serializers.CharField())
+    data = serializers.ListField(child=serializers.IntegerField())
+
+
+class BarChartSerializer(serializers.Serializer):
+    labels = serializers.ListField(child=serializers.CharField())
+    data = serializers.ListField(child=serializers.IntegerField())
+
+
+class PieChartSerializer(serializers.Serializer):
+    labels = serializers.ListField(child=serializers.CharField())
+    data = serializers.ListField(child=serializers.IntegerField())
