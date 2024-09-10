@@ -4,7 +4,9 @@
   "private": true,
   "sideEffects": false,
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "react": "^18.3.0",
+    "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.0",
     "react-google-charts": "^4.0.1"
   },
