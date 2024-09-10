@@ -1,17 +1,92 @@
 'use client'
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { Chart } from "react-google-charts";
 import { BarChartDataElement } from '@frontend/types/api/services/BarChartDataService';
 import { LineChartDataElement } from '@frontend/types/api/services/LineChartDataService';
 import { PieChartDataElement } from '@frontend/types/api/services/PieChartDataService';
 import { CandlestickDataElement } from '@frontend/types/api/services/CandlestickDataService';
-import { CandlestickChart } from './CandlestickChart';
 
 export type DashboardProps = {
     barData: BarChartDataElement[];
     lineData: LineChartDataElement[];
     pieData: PieChartDataElement[];
     candlestickData: CandlestickDataElement[];
+};
+
+export const BarChartComponent = ({ data }: { data: BarChartDataElement[] }) => {
+    const chartData = [
+        ["Label", "Value"],
+        ...data.map(({ label, x }) => [label, x]),
+    ];
+
+    return (
+        <Chart
+            chartType="Bar"
+            width="100%"
+            height="300px"
+            data={chartData}
+        />
+    );
+};
+
+export const LineChartComponent = ({ data }: { data: LineChartDataElement[] }) => {
+    const chartData = [
+        ["Label", "Value"],
+        ...data.map(({ label, x }) => [label, x]),
+    ];
+
+    return (
+        <Chart
+            chartType="LineChart"
+            width="100%"
+            height="300px"
+            data={chartData}
+            options={{
+                curveType: "function",
+            }}
+        />
+    );
+};
+
+export const PieChartComponent = ({ data }: { data: PieChartDataElement[] }) => {
+    const chartData = [
+        ["Label", "Value"],
+        ...data.map(({ label, x }) => [label, x]),
+    ];
+
+    return (
+        <Chart
+            chartType="PieChart"
+            width="100%"
+            height="300px"
+            data={chartData}
+            options={{
+                colors: ['#fc2403', '#4287f5', '#fcba03']
+            }}
+        />
+    );
+};
+
+export const CandlestickChartComponent = ({ data }: { data: CandlestickDataElement[] }) => {
+    const chartData = [
+        ["Date", "Value", "", "", ""],
+        ...data.map(({ x, open, low, high, close }) => [x, low, open, close, high]),
+    ];
+
+    return (
+        <Chart
+            chartType="CandlestickChart"
+            width="100%"
+            height="300px"
+            data={chartData}
+            options={{
+                candlestick: {
+                    fallingColor: { strokeWidth: 0, fill: "#a52714" },
+                    risingColor: { strokeWidth: 0, fill: "#0f9d58" }
+                }
+            }}
+        />
+    );
 };
 
 export const Dashboard = ({ barData, lineData, pieData, candlestickData }: DashboardProps) => {
@@ -21,45 +96,22 @@ export const Dashboard = ({ barData, lineData, pieData, candlestickData }: Dashb
 
             <div className="mb-8">
                 <h2 className="text-xl font-semibold mb-2">Bar Chart</h2>
-                <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={barData}>
-                        <XAxis dataKey="label" />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="x" fill="#8884d8" />
-                    </BarChart>
-                </ResponsiveContainer>
+                <BarChartComponent data={barData} />
             </div>
 
             <div className="mb-8">
                 <h2 className="text-xl font-semibold mb-2">Line Chart</h2>
-                <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={lineData}>
-                        <XAxis dataKey="label" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line type="monotone" dataKey="x" stroke="#82ca9d" />
-                    </LineChart>
-                </ResponsiveContainer>
+                <LineChartComponent data={lineData} />
             </div>
 
             <div className="mb-8">
                 <h2 className="text-xl font-semibold mb-2">Pie Chart</h2>
-                <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                        <Pie data={pieData} dataKey="x" nameKey="label" cx="50%" cy="50%" outerRadius={100} fill="#8884d8">
-                            {pieData.map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={['#eb4034', '#348ceb', '#ffc658'][index % 3]} />
-                            ))}
-                        </Pie>
-                        <Tooltip />
-                    </PieChart>
-                </ResponsiveContainer>
+                <PieChartComponent data={pieData} />
             </div>
 
             <div className="mb-8">
                 <h2 className="text-xl font-semibold mb-2">Candlestick Chart</h2>
-                <CandlestickChart candlestickData={candlestickData} />
+                <CandlestickChartComponent data={candlestickData} />
             </div>
         </div>
     );
